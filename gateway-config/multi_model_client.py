@@ -1,26 +1,24 @@
 #!/usr/bin/env python3
 """Multi-model inference client via 9Router (OpenAI-compatible).
 
+Setup:
+    export GATEWAY_URL="http://localhost:20128/v1"
+    export GATEWAY_KEY="your-gateway-key"
+
 Usage:
     from multi_model_client import chat
-    
-    # Default routing
     answer = chat("Explain quantum entanglement in 2 sentences.")
-    
-    # Specific model
     answer = chat("Refactor this code", model="deepseek-v4-flash")
-    
-    # With fallback chain
     answer = chat(prompt, models=["claude-sonnet-4", "deepseek-v4-flash", "qwen2.5-coder-32b"])
 """
 import httpx
 import os
 from typing import Optional
 
-GATEWAY_URL = os.environ.get("GATEWAY_URL", "http://localhost:20128/v1")
-GATEWAY_KEY = os.environ.get("GATEWAY_KEY", "sk-9router")
+GATEWAY_URL = os.environ["GATEWAY_URL"]
+GATEWAY_KEY = os.environ["GATEWAY_KEY"]
 
-DEFAULT_MODEL = "Combo-Agent"  # router default
+DEFAULT_MODEL = "Combo-Agent"
 
 
 def chat(
@@ -91,5 +89,4 @@ def stream_chat(prompt: str, model: str = DEFAULT_MODEL, **kwargs):
 
 
 if __name__ == "__main__":
-    # Demo
     print(chat("Hello, what's 2+2?"))
