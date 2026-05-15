@@ -1,22 +1,19 @@
 # 9Router (OpenAI-compatible local gateway) — example config
 # Routes inference requests across multiple model providers via single API surface.
 
-base_url: "http://localhost:20128/v1"
-api_key: "sk-9router"
+base_url: "${GATEWAY_URL}"  # e.g. http://localhost:20128/v1
+api_key: "${GATEWAY_KEY}"   # set via env, never hardcode
 
 routes:
-  # Combo agent (default for chat / reasoning)
   combo:
     upstream: "anthropic"
     model: "claude-sonnet-4"
     fallback: "deepseek-v3-flash"
 
-  # Vision tasks
   vision:
     upstream: "kr"
     model: "claude-sonnet-4.5"
 
-  # Coding tasks
   code:
     upstream: "deepseek"
     model: "deepseek-v4-flash"
@@ -24,7 +21,6 @@ routes:
     extra:
       reasoning_max_tokens: 1500
 
-  # Cheap / fast queries
   fast:
     upstream: "qwen"
     model: "qwen2.5-coder-32b"
